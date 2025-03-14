@@ -1,0 +1,24 @@
+CREATE TABLE DataMart_Log.Update_RuleResults_Views_Log
+(ViewName VARCHAR(200) NOT NULL CONSTRAINT PK_Update_RuleResults_Views PRIMARY KEY CLUSTERED,
+StartTime DATETIME2,
+EndTime DATETIME2 NULL,
+RunTime_sec DECIMAL(38,6) NULL,
+ViewDefinition VARCHAR(MAX) NULL,
+Error VARCHAR(1000) NOT NULL DEFAULT (''),
+ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START,
+ValidTo DATETIME2 GENERATED ALWAYS AS ROW END,
+PERIOD FOR SYSTEM_TIME(ValidFrom, ValidTo)
+)
+WITH (SYSTEM_VERSIONING = ON
+(HISTORY_TABLE = DataMart_Log.Update_RuleResults_Views_History_Log,
+HISTORY_RETENTION_PERIOD = 2 WEEKS)
+);
+GO
+/*
+-- DROP temporal TABLE
+ALTER TABLE DataMart_Log.Update_RuleResults_Views_Log SET ( SYSTEM_VERSIONING = OFF )
+GO
+DROP TABLE DataMart_Log.Update_RuleResults_Views_Log
+GC
+DROP TABLE DataMart_Log.Update_RuleResults_Views_History_Log
+*/
