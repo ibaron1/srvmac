@@ -1,0 +1,6 @@
+CREATE FUNCTION [Utilities].[SuperTrim] (@InputString VARCHAR(MAX))
+RETURNS VARCHAR (MAX)
+AS
+BEGIN
+	RETURN TRIM(CHAR(10) + CHAR(13) + CHAR(9) +'' +'_' FROM @InputString)
+END;
